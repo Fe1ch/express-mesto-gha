@@ -1,5 +1,6 @@
 const Card = require('../models/card');
 const {
+  STATUS_SUCCESS,
   STATUS_CREATED,
   STATUS_BAD_REQUEST,
   STATUS_NOT_FOUND,
@@ -9,7 +10,7 @@ const {
 // GET ALL CARDS
 module.exports.getAllCards = (req, res) => {
   Card.find({})
-    .then((cards) => res.send(cards))
+    .then((cards) => res.status(STATUS_SUCCESS).send(cards))
     .catch((err) => handleDefaultError(err, res));
 };
 
@@ -36,9 +37,7 @@ module.exports.deleteCard = (req, res) => {
     .orFail(() => {
       throw new Error('NotFoundError');
     })
-    .then(() => {
-      res.send({ message: 'Карточка успешно удалена' });
-    })
+    .then(() => res.status(STATUS_SUCCESS).send({ message: 'Карточка успешно удалена' }))
     .catch((err) => {
       if (err.message === 'NotFoundError') {
         res.status(STATUS_NOT_FOUND).send({
@@ -64,9 +63,7 @@ module.exports.likeCard = (req, res) => {
     .orFail(() => {
       throw new Error('NotFoundError');
     })
-    .then((newData) => {
-      res.send(newData);
-    })
+    .then((newData) => res.status(STATUS_SUCCESS).send(newData))
     .catch((err) => {
       if (err.message === 'NotFoundError') {
         res.status(STATUS_NOT_FOUND).send({
@@ -92,9 +89,7 @@ module.exports.dislikeCard = (req, res) => {
     .orFail(() => {
       throw new Error('NotFoundError');
     })
-    .then((newData) => {
-      res.send(newData);
-    })
+    .then((newData) => res.status(STATUS_SUCCESS).send(newData))
     .catch((err) => {
       if (err.message === 'NotFoundError') {
         res.status(STATUS_NOT_FOUND).send({

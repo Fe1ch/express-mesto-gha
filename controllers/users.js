@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const {
+  STATUS_SUCCESS,
   STATUS_CREATED,
   STATUS_BAD_REQUEST,
   STATUS_NOT_FOUND,
@@ -9,7 +10,7 @@ const {
 // GET ALL USERS
 module.exports.getAllUsers = (req, res) => {
   User.find({})
-    .then((users) => res.send(users))
+    .then((users) => res.status(STATUS_SUCCESS).send(users))
     .catch((err) => handleDefaultError(err, res));
 };
 
@@ -19,7 +20,7 @@ module.exports.getUser = (req, res) => {
     .orFail(() => {
       throw new Error('NotFoundError');
     })
-    .then((user) => res.send(user))
+    .then((user) => res.status(STATUS_SUCCESS).send(user))
     .catch((err) => {
       if (err.message === 'NotFoundError') {
         res.status(STATUS_NOT_FOUND).send({
@@ -62,9 +63,7 @@ module.exports.updateProfile = (req, res) => {
     .orFail(() => {
       throw new Error('NotFoundError');
     })
-    .then((updateData) => {
-      res.send(updateData);
-    })
+    .then((user) => res.status(STATUS_SUCCESS).send(user))
     .catch((err) => {
       if (err.message === 'NotFoundError') {
         res.status(STATUS_NOT_FOUND).send({
@@ -92,9 +91,7 @@ module.exports.updateAvatar = (req, res) => {
     .orFail(() => {
       throw new Error('NotFoundError');
     })
-    .then(() => {
-      res.send(req.body);
-    })
+    .then((user) => res.status(STATUS_SUCCESS).send(user))
     .catch((err) => {
       if (err.message === 'NotFoundError') {
         res.status(STATUS_NOT_FOUND).send({
