@@ -99,7 +99,7 @@ module.exports.updateAvatar = (req, res) => {
         });
         return;
       }
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'ValidationError') {
         res.status(STATUS_BAD_REQUEST).send({
           message: 'Переданы некорректные данные при обновлении аватара.',
         });

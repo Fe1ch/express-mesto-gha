@@ -4,7 +4,7 @@
   "description": "backend mesto project",
   "main": "app.js",
   "scripts": {
-    "lint": "npx eslint",
+    "lint": "npx eslint .",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
@@ -28,7 +28,6 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "mongoose": "^7.4.3"
   }
