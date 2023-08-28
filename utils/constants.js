@@ -1,20 +1,21 @@
 const STATUS_SUCCESS = 200;
 const STATUS_CREATED = 201;
 const STATUS_BAD_REQUEST = 400;
+const STATUS_UNAUTHORIZED = 401;
+const STATUS_FORBIDDEN = 403;
 const STATUS_NOT_FOUND = 404;
+const STATUS_CONFLICT = 409;
 const STATUS_INTERNAL_SERVER_ERROR = 500;
-
-const handleDefaultError = (err, res) => {
-  res.status(STATUS_INTERNAL_SERVER_ERROR).send({
-    message: 'На сервере произошла ошибка',
-  });
-};
+const URL_REGEX = /http?s:\/\/(www.)?[-_~:/?#@!$&'[\]()*+,;.=a-z0-9]+/i;
 
 module.exports = {
   STATUS_SUCCESS,
   STATUS_CREATED,
   STATUS_BAD_REQUEST,
+  STATUS_UNAUTHORIZED,
+  STATUS_FORBIDDEN,
   STATUS_NOT_FOUND,
+  STATUS_CONFLICT,
   STATUS_INTERNAL_SERVER_ERROR,
-  handleDefaultError,
+  URL_REGEX,
 };

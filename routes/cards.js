@@ -9,11 +9,22 @@ const {
   dislikeCard,
 } = require('../controllers/cards');
 
+const {
+  validateNewCard,
+  validateDeleteCard,
+  validateLikeCard,
+  validateDislikeCard,
+} = require('../utils/validation');
+
 // GET ALL CARDS
-router.get('/', getAllCards);
-router.post('/', createCard);
-router.delete('/:cardId', deleteCard);
-router.put('/:cardId/likes', likeCard);
-router.delete('/:cardId/likes', dislikeCard);
+router.get('/', getAllCards)
+
+router.post('/', validateNewCard(), createCard)
+
+router.delete('/:cardId', validateDeleteCard(), deleteCard)
+
+router.put('/:cardId/likes', validateLikeCard(), likeCard)
+
+router.delete('/:cardId/likes', validateDislikeCard(), dislikeCard)
 
 module.exports = router;
