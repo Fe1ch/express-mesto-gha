@@ -2,24 +2,22 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
-const { STATUS_SUCCESS, STATUS_CREATED } = require('../utils/constants');
+const { STATUS_CREATED } = require('../utils/constants');
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 const NotFoundError = require('../utils/errors/NotFoundError');
-
+const BadRequestError = require('../utils/errors/BadRequestError');
 // GET ALL USERS
 module.exports.getAllUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.status(STATUS_SUCCESS).send(users))
+    .then((users) => res.send(users))
     .catch(next);
 };
 
 // GET USER
 module.exports.getUser = (req, res, next) => {
   User.findById(req.params.userId)
-    .orFail(() => {
-      throw new NotFoundError('Пользователь с указанным _id не найден');
-    })
-    .then((user) => res.status(STATUS_SUCCESS).send(user))
+    .orFail(new NotFoundError('Пользователь с указанным _id не найден'))
+    .then((user) => res.send(user))
     .catch(next);
 };
 
@@ -27,10 +25,8 @@ module.exports.getUser = (req, res, next) => {
 module.exports.getUserInfo = (req, res, next) => {
   const { _id } = req.user;
   return User.findOne({ _id })
-    .orFail(() => {
-      throw new NotFoundError('Пользователь не найден');
-    })
-    .then((user) => res.status(STATUS_SUCCESS).send(user))
+    .orFail(new NotFoundError('Пользователь не найден'))
+    .then((user) => res.send(user))
     .catch(next)
 };
 
@@ -65,6 +61,7 @@ module.exports.createUser = (req, res, next) => {
 // LOGIN
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
+  if (!email || !password) throw new BadRequestError('Email или пароль не могут быть пустыми');
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -87,23 +84,23 @@ module.exports.updateProfile = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true },
   )
-    .orFail(() => {
-      throw new NotFoundError('Пользователь не найден');
-    })
-    .then((user) => res.status(STATUS_SUCCESS).send(user))
+    .orFail(new NotFoundError('Пользователь не найден'))
+    .then((user) => res.send(user))
     .catch(next);
 };
 
 // PATCH UPDATE USER INFO AVATAR
 module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, avatar, {
-    new: true,
-    runValidators: true,
-  })
-    .orFail(() => {
-      throw new NotFoundError('Пользователь не найден');
-    })
-    .then((user) => res.status(STATUS_SUCCESS).send(user))
+  User.findByIdAndUpdate(
+    req.user._id,
+    avatar,
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .orFail(new NotFoundError('Пользователь не найден'))
+    .then((user) => res.send(user))
     .catch(next);
 };
