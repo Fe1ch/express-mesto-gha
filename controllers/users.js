@@ -6,6 +6,9 @@ const { STATUS_CREATED } = require('../utils/constants');
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 const NotFoundError = require('../utils/errors/NotFoundError');
 const BadRequestError = require('../utils/errors/BadRequestError');
+
+const { NODE_ENV, SECRET_KEY } = process.env;
+
 // GET ALL USERS
 module.exports.getAllUsers = (req, res, next) => {
   User.find({})
@@ -61,11 +64,12 @@ module.exports.createUser = (req, res, next) => {
 // LOGIN
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) throw new BadRequestError('Email или пароль не могут быть пустыми');
-
+  if (!email || !password) {
+    throw new BadRequestError('Email или пароль не могут быть пустыми');
+  }
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'very-secret-key', {
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? SECRET_KEY : 'some-secret-key', {
         expiresIn: '7d',
       });
       return res.send({ token });
