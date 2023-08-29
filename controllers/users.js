@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
-const { STATUS_CREATED } = require('../utils/constants');
+const { STATUS_SUCCESS, STATUS_CREATED } = require('../utils/constants');
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 const NotFoundError = require('../utils/errors/NotFoundError');
 const BadRequestError = require('../utils/errors/BadRequestError');
@@ -72,7 +72,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? SECRET_KEY : 'some-secret-key', {
         expiresIn: '7d',
       });
-      return res.send({ token });
+      res.res.status(STATUS_SUCCESS).send({ token });
     })
     .catch(() => {
       next(new UnauthorizedError('Неправильные почта или пароль'));
