@@ -65,7 +65,7 @@ module.exports.createUser = (req, res, next) => {
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    throw new BadRequestError('Email или пароль не могут быть пустыми');
+    next(new BadRequestError('Email или пароль не могут быть пустыми'));
   }
   return User.findUserByCredentials(email, password)
     .then((user) => {
