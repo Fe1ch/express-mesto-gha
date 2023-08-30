@@ -4,7 +4,7 @@ const usersRoutes = require('./users');
 const cardsRoutes = require('./cards');
 const signin = require('./signin');
 const signup = require('./signup');
-const { notFound } = require('../controllers/notFound');
+const notFound = require('./notFound');
 const auth = require('../middlewares/auth');
 
 router.use('/signin', signin);
