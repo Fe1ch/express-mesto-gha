@@ -4,7 +4,6 @@ const User = require('../models/user');
 
 const { STATUS_SUCCESS, STATUS_CREATED } = require('../utils/constants');
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
-const NotFoundError = require('../utils/errors/NotFoundError');
 const BadRequestError = require('../utils/errors/BadRequestError');
 
 const { NODE_ENV, SECRET_KEY } = process.env;
@@ -19,7 +18,7 @@ module.exports.getAllUsers = (req, res, next) => {
 // GET USER
 module.exports.getUser = (req, res, next) => {
   User.findById(req.params.userId)
-    .orFail(new NotFoundError('Пользователь с указанным _id не найден'))
+    .orFail()
     .then((user) => res.send(user))
     .catch(next);
 };
@@ -28,7 +27,7 @@ module.exports.getUser = (req, res, next) => {
 module.exports.getUserInfo = (req, res, next) => {
   const { _id } = req.user;
   return User.findOne({ _id })
-    .orFail(new NotFoundError('Пользователь не найден'))
+    .orFail()
     .then((user) => res.send(user))
     .catch(next)
 };
@@ -72,7 +71,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? SECRET_KEY : 'some-secret-key', {
         expiresIn: '7d',
       });
-      res.res.status(STATUS_SUCCESS).send({ token });
+      res.status(STATUS_SUCCESS).send({ token });
     })
     .catch(() => {
       next(new UnauthorizedError('Неправильные почта или пароль'));
@@ -88,7 +87,7 @@ module.exports.updateProfile = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true },
   )
-    .orFail(new NotFoundError('Пользователь не найден'))
+    .orFail()
     .then((user) => res.send(user))
     .catch(next);
 };
@@ -104,7 +103,7 @@ module.exports.updateAvatar = (req, res, next) => {
       runValidators: true,
     },
   )
-    .orFail(new NotFoundError('Пользователь не найден'))
+    .orFail()
     .then((user) => res.send(user))
     .catch(next);
 };
