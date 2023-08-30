@@ -6,7 +6,7 @@ const STATUS_FORBIDDEN = 403;
 const STATUS_NOT_FOUND = 404;
 const STATUS_CONFLICT = 409;
 const STATUS_INTERNAL_SERVER_ERROR = 500;
-const URL_REGEX = /http?s:\/\/(www.)?[-_~:/?#@!$&'[\]()*+,;.=a-z0-9]+/i;
+const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
 
 module.exports = {
   STATUS_SUCCESS,

@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Поле "password" должно быть заполнено'],
     select: false,
   },
-});
+}, { versionKey: false });
 
 userSchema.statics.findUserByCredentials = function (email, password, next) {
   // попытаемся найти пользователя по почте
