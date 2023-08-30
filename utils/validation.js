@@ -1,84 +1,66 @@
 const { Joi, celebrate } = require('celebrate');
 const { URL_REGEX } = require('./constants');
 
-function validateSignin() {
-  return celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().email().required(),
-      password: Joi.string().required().min(8),
-    }),
-  })
-}
+const validateSignin = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(4),
+  }),
+})
 
-function validateSignup() {
-  return celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required().min(8),
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-      avatar: Joi.string().pattern(URL_REGEX),
-    }),
-  })
-}
+const validateSignup = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(4).required(),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(20),
+    avatar: Joi.string().pattern(URL_REGEX),
+  }),
+});
 
-function validateNewCard() {
-  return celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      link: Joi.string().required().pattern(URL_REGEX),
-    }),
-  })
-}
+const validateNewCard = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30).required(),
+    link: Joi.string().pattern(URL_REGEX).required(),
+  }),
+});
 
-function validateDeleteCard() {
-  return celebrate({
-    params: Joi.object().keys({
-      cardId: Joi.string().required().hex().length(24),
-    }),
-  })
-}
+const validateDeleteCard = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().hex().length(24),
+  }),
+});
 
-function validateLikeCard() {
-  return celebrate({
-    params: Joi.object().keys({
-      cardId: Joi.string().required().hex().length(24),
-    }),
-  })
-}
+const validateLikeCard = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().hex().length(24),
+  }),
+});
 
-function validateDislikeCard() {
-  return celebrate({
-    params: Joi.object().keys({
-      cardId: Joi.string().required().hex().length(24),
-    }),
-  })
-}
+const validateDislikeCard = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().hex().length(24),
+  }),
+});
 
-function validateGetUser() {
-  return celebrate({
-    params: Joi.object().keys({
-      userId: Joi.string().required().hex().length(24),
-    }),
-  })
-}
+const validateGetUser = celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().required().hex().length(24),
+  }),
+});
 
-function validateUserInfo() {
-  return celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      about: Joi.string().required().min(2).max(30),
-    }),
-  })
-}
+const validateUserInfo = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2).max(30),
+  }),
+})
 
-function validateUserAvatar() {
-  return celebrate({
-    body: Joi.object().keys({
-      avatar: Joi.string().required().pattern(URL_REGEX),
-    }),
-  })
-}
+const validateUserAvatar = celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required().pattern(URL_REGEX),
+  }),
+});
 
 module.exports = {
   validateSignin,

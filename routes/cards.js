@@ -19,12 +19,12 @@ const {
 // GET ALL CARDS
 router.get('/', getAllCards)
 
-router.post('/', validateNewCard(), createCard)
+router.post('/', validateNewCard, createCard)
 
-router.delete('/:cardId', validateDeleteCard(), deleteCard)
+router.delete('/:cardId', validateDeleteCard, deleteCard)
 
-router.put('/:cardId/likes', validateLikeCard(), likeCard)
+router.put('/:cardId/likes', validateLikeCard, likeCard)
 
-router.delete('/:cardId/likes', validateDislikeCard(), dislikeCard)
+router.delete('/:cardId/likes', validateDislikeCard, dislikeCard)
 
 module.exports = router;

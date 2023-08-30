@@ -13,8 +13,8 @@ const { validateGetUser, validateUserInfo, validateUserAvatar } = require('../ut
 
 router.get('/', getAllUsers);
 router.get('/me', getUserInfo);
-router.get('/:userId', validateGetUser(), getUser);
-router.patch('/me', validateUserInfo(), updateProfile);
-router.patch('/me/avatar', validateUserAvatar(), updateAvatar);
+router.get('/:userId', validateGetUser, getUser);
+router.patch('/me', validateUserInfo, updateProfile);
+router.patch('/me/avatar', validateUserAvatar, updateAvatar);
 
 module.exports = router;
