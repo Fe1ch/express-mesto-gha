@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 const { STATUS_SUCCESS, STATUS_CREATED } = require('../utils/constants');
-const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 const BadRequestError = require('../utils/errors/BadRequestError');
 
 const { NODE_ENV, SECRET_KEY } = process.env;
@@ -72,9 +71,6 @@ module.exports.login = (req, res, next) => {
         expiresIn: '7d',
       });
       res.status(STATUS_SUCCESS).send({ token });
-    })
-    .catch(() => {
-      next(new UnauthorizedError('Неправильные почта или пароль'));
     })
     .catch(next);
 };
