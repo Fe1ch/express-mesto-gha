@@ -11,6 +11,6 @@ router.use('/signin', signin);
 router.use('/signup', signup);
 router.use('/users', auth, usersRoutes);
 router.use('/cards', auth, cardsRoutes);
-router.use('/*', notFound);
+router.use('*', notFound);
 
 module.exports = router;
