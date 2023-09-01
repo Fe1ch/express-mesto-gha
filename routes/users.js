@@ -11,10 +11,10 @@ const {
 
 const { validateGetUser, validateUserInfo, validateUserAvatar } = require('../utils/validation')
 
-router.get('/', getAllUsers);
-router.get('/me', getUserInfo);
-router.get('/:userId', validateGetUser, getUser);
-router.patch('/me', validateUserInfo, updateProfile);
-router.patch('/me/avatar', validateUserAvatar, updateAvatar);
+router.get('/users', getAllUsers);
+router.get('/users/me', getUserInfo);
+router.get('/users/:userId', validateGetUser, getUser);
+router.patch('/users/me', validateUserInfo, updateProfile);
+router.patch('/users/me/avatar', validateUserAvatar, updateAvatar);
 
 module.exports = router;
