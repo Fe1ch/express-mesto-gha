@@ -95,7 +95,7 @@ module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    avatar,
+    { avatar },
     {
       new: true,
       runValidators: true,
