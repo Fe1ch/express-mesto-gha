@@ -7,11 +7,11 @@ const signup = require('./signup');
 // const notFound = require('./notFound');
 const auth = require('../middlewares/auth');
 
-router.use(auth);
 router.use(signin);
 router.use(signup);
-router.use('/users', usersRoutes);
-router.use('/cards', cardsRoutes);
+router.use(auth);
+router.use(usersRoutes);
+router.use(cardsRoutes);
 // router.use('*', notFound);
 
 module.exports = router;

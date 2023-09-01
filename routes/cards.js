@@ -17,14 +17,14 @@ const {
 } = require('../utils/validation');
 
 // GET ALL CARDS
-router.get('/', getAllCards)
+router.get('/cards', getAllCards)
 
-router.post('/', validateNewCard, createCard)
+router.post('/cards', validateNewCard, createCard)
 
-router.delete('/:cardId', validateDeleteCard, deleteCard)
+router.delete('/cards/:cardId', validateDeleteCard, deleteCard)
 
-router.put('/:cardId/likes', validateLikeCard, likeCard)
+router.put('/cards/:cardId/likes', validateLikeCard, likeCard)
 
-router.delete('/:cardId/likes', validateDislikeCard, dislikeCard)
+router.delete('/cards/:cardId/likes', validateDislikeCard, dislikeCard)
 
 module.exports = router;
