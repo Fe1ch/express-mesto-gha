@@ -69,6 +69,9 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? SECRET_KEY : 'some-secret-key', {
         expiresIn: '7d',
       });
+      // const token = jwt.sign({ _id: user._id }, 'some-secret-key', {
+      //   expiresIn: '7d',
+      // });
       res.status(STATUS_SUCCESS).send({ token });
     })
     .catch(next);
