@@ -14,7 +14,7 @@
 <h2>Инструкция по установке</h2>
 
 1. `git clone https://github.com/fe1ch/express-mesto-gha.git` - клонируем репозиторий
-2. `npm i` - устанавливаем зависиимости
+2. `npm i` - устанавливаем зависимости
 3. `npm run dev` - запускает сервер с hot-reload
 4. `npm run start` - запускает сервер
 
